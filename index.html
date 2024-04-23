@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palindrome Checker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #result {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+    
+<div class="container">
+    <h2>Palindrome Checker</h2>
+    <label for="inputString">Enter a string:</label>
+    <input type="text" id="inputString" placeholder="Enter a string...">
+    <button onclick="checkPalindrome()">Check</button>
+    <div id="result"></div>
+</div>
+
+
+<div class="container">
+    <h2>Minimum and Maximum Number Finder</h2>
+    <label for="numbers">Enter numbers separated by commas:</label>
+    <input type="text" id="numbers1" placeholder="Enter numbers...">
+    <button onclick="findMinMax()">Find Min/Max</button>
+    <div id="result1"></div>
+</div>
+
+
+<div class="container">
+    <h2>Missing Number Identification</h2>
+    <label for="numbers">Enter numbers separated by commas:</label>
+    <input type="text" id="numbers2" placeholder="Enter numbers...">
+    <button onclick="findMissingNumber()">Find Missing Number</button>
+    <div id="result2"></div>
+</div>
+
+
+<script>
+function isPalindrome(str) {
+    
+    str = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+    
+    
+    if (str.length <= 1) {
+        return true;
+    }
+    
+  
+    if (str[0] !== str[str.length - 1]) {
+        return false;
+    }
+    
+   
+    return isPalindrome(str.substring(1, str.length - 1));
+}
+
+function checkPalindrome() {
+    const inputString = document.getElementById('inputString').value;
+    const resultDiv = document.getElementById('result');
+    
+    if (inputString.trim() === '') {
+        resultDiv.innerText = 'Please enter a string.';
+        return;
+    }
+    
+    if (isPalindrome(inputString)) {
+        resultDiv.innerText = 'The string is a palindrome.';
+    } else {
+        resultDiv.innerText = 'The string is not a palindrome.';
+    }
+}
+
+
+// maximum and minimum
+
+function findMinMax() {
+    const numbersInput = document.getElementById('numbers1').value;
+    const resultDiv = document.getElementById('result1');
+    
+    // Convert input string to an array of numbers
+    const numbersArray = numbersInput.split(',').map(Number);
+    
+    // Check if the input is valid
+    if (numbersArray.some(isNaN)) {
+        resultDiv.innerText = 'Please enter valid numbers separated by commas.';
+        return;
+    }
+    
+    // Check if the array is empty
+    if (numbersArray.length === 0) {
+        resultDiv.innerText = 'Array is empty';
+        return;
+    }
+    
+    // Find minimum and maximum numbers
+    let min = numbersArray[0];
+    let max = numbersArray[0];
+    
+    for (let i = 1; i < numbersArray.length; i++) {
+        if (numbersArray[i] < min) {
+            min = numbersArray[i];
+        }
+        if (numbersArray[i] > max) {
+            max = numbersArray[i];
+        }
+    }
+    
+    // Display the result
+    resultDiv.innerHTML =` Minimum: ${min}<br>Maximum: ${max}`;
+}
+
+
+
+
+
+
+// Missing
+
+
+
+
+function findMissingNumber() {
+    const numbersInput = document.getElementById('numbers2').value;
+    const resultDiv = document.getElementById('result2');
+    
+    // Convert input string to an array of numbers
+    const numbersArray = numbersInput.split(',').map(Number);
+    
+    // Check if the input is valid
+    if (numbersArray.some(isNaN)) {
+        resultDiv.innerText = 'Please enter valid numbers separated by commas.';
+        return;
+    }
+    
+    // Sort the array in ascending order
+    numbersArray.sort((a, b) => a - b);
+    
+    // Find the missing number
+    let missingNumber = "No missing number found";
+    for (let i = 0; i < numbersArray.length - 1; i++) {
+        if (numbersArray[i + 1] - numbersArray[i] !== 1) {
+            missingNumber = numbersArray[i] + 1;
+            break;
+        }
+    }
+    
+    // Display the result
+    resultDiv.innerText =` Missing number: ${missingNumber}`;
+}
+
+
+</script>
+</body>
+</html>
